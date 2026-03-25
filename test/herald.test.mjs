@@ -26,6 +26,16 @@ describe("shouldInject", () => {
     state.injected = true;
     assert.equal(shouldInject(state, "/projects/bar"), false);
   });
+
+  it("stays latched after cwd change even if caller sets injected with no matches", () => {
+    const state = { injected: false, lastCwd: null };
+    // First call: should inject
+    assert.equal(shouldInject(state, "/projects/foo"), true);
+    // Caller sets injected = true even though no preferences matched
+    state.injected = true;
+    // Second call: should NOT inject (latch is closed)
+    assert.equal(shouldInject(state, "/projects/foo"), false);
+  });
 });
 
 describe("buildInjection", () => {

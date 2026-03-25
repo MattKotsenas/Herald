@@ -99,6 +99,21 @@ describe("matchesContext", () => {
     );
     assert.equal(result, false);
   });
+
+  it("returns false for non-string cwdContains", async () => {
+    const result = await matchesContext({ cwdContains: 123 }, FIXTURE_DIR);
+    assert.equal(result, false);
+  });
+
+  it("returns false for non-string fileExists", async () => {
+    const result = await matchesContext({ fileExists: true }, FIXTURE_DIR);
+    assert.equal(result, false);
+  });
+
+  it("returns false for non-string remote", async () => {
+    const result = await matchesContext({ remote: 42 }, FIXTURE_DIR);
+    assert.equal(result, false);
+  });
 });
 
 describe("getMatchingPreferences", () => {

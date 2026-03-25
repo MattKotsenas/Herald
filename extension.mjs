@@ -20,13 +20,17 @@ const session = await joinSession({
       clearRemoteCache();
 
       const prefs = loadPreferences(PREFS_PATH);
-      if (prefs.length === 0) return;
+      if (prefs.length === 0) {
+        state.injected = true; // latch closed even with no prefs file
+        return;
+      }
 
       const matched = await getMatchingPreferences(prefs, cwd);
       const injection = buildInjection(matched);
-      if (!injection) return;
 
-      state.injected = true;
+      state.injected = true; // latch closed regardless of match count
+
+      if (!injection) return;
 
       await session.log(
         `Herald announces: ${matched.length} preference(s) for this workspace`,

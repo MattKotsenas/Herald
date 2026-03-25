@@ -47,12 +47,14 @@ export async function matchesContext(when, cwd) {
   if (!when || Object.keys(when).length === 0) return true;
 
   if (when.cwdContains) {
+    if (typeof when.cwdContains !== "string") return false;
     if (!cwd.toLowerCase().includes(when.cwdContains.toLowerCase())) {
       return false;
     }
   }
 
   if (when.fileExists) {
+    if (typeof when.fileExists !== "string") return false;
     const pattern = when.fileExists;
     // Simple filename (no glob chars) - use existsSync for speed
     if (!/[*?{[]/.test(pattern)) {
@@ -65,6 +67,7 @@ export async function matchesContext(when, cwd) {
   }
 
   if (when.remote) {
+    if (typeof when.remote !== "string") return false;
     const remotes = getRemotes(cwd);
     if (!remotes.toLowerCase().includes(when.remote.toLowerCase())) {
       return false;
