@@ -98,6 +98,10 @@ cp sample-preferences.yaml ~/.copilot/preferences.yaml
 
 Then edit `~/.copilot/preferences.yaml` to match your workflow.
 
+Herald also loads `~/.copilot/preferences.local.yaml` if it exists. Use this for
+private or internal preferences you don't want in version control (e.g., internal
+package feeds, org-specific branch naming). Both files are merged at load time.
+
 ## Preferences format
 
 ```yaml

@@ -6,6 +6,7 @@ import { getMatchingPreferences, clearRemoteCache } from "./context.mjs";
 import { shouldInject, buildInjection } from "./herald.mjs";
 
 const PREFS_PATH = join(homedir(), ".copilot", "preferences.yaml");
+const PREFS_LOCAL_PATH = join(homedir(), ".copilot", "preferences.local.yaml");
 
 const state = { injected: false, lastCwd: null };
 
@@ -19,7 +20,10 @@ const session = await joinSession({
       // cwd changed - clear cached remotes
       clearRemoteCache();
 
-      const prefs = loadPreferences(PREFS_PATH);
+      const prefs = [
+        ...loadPreferences(PREFS_PATH),
+        ...loadPreferences(PREFS_LOCAL_PATH),
+      ];
       if (prefs.length === 0) {
         state.injected = true; // latch closed even with no prefs file
         return;
