@@ -200,6 +200,58 @@ Based on analysis of real developer session histories, the most common discovera
 The pattern: **facts about this workspace** go in preferences, **rules about how to think** stay
 in instructions.
 
+## How Herald compares to other approaches
+
+There are several ways to give AI agents persistent memory. Herald occupies a specific niche -
+understanding when to use it (and when not to) saves you from over- or under-engineering.
+
+### The memory landscape
+
+| Approach | How it works | Strengths | Weaknesses |
+|----------|-------------|-----------|------------|
+| **Instruction files** (`copilot-instructions.md`, `AGENTS.md`) | Eagerly loaded into every prompt | Always available, zero latency | Competes for attention, doesn't vary by context |
+| **Herald** (this tool) | Lazily injects preferences once per workspace based on context matchers | Low attention cost, context-aware, user-controlled | Manual curation, no learning |
+| **Auto-memory tools** (agent-managed memory stores) | Agent writes observations to a persistent store, retrieves them via embedding search | Scales to thousands of memories, learns automatically | Noisy, unpredictable recall, agent decides what to remember |
+| **Multi-agent frameworks** (persistent team files in git) | Each "agent" has its own history and charter committed to the repo | Knowledge compounds across sessions | High token overhead, [marginal quality gains](https://openreview.net/forum?id=i95lcR2GN5) for same-model setups |
+
+### When to use Herald
+
+Herald is right when your preferences are:
+- **Stable** - they don't change session to session ("always use `users/me/` on ADO")
+- **Few** - tens of preferences, not thousands
+- **Contextual** - different workspaces need different preferences
+- **Authored by you** - you know what matters, the agent doesn't need to figure it out
+
+### When to use something else
+
+Consider an auto-memory tool when:
+- You want the agent to **learn from corrections** automatically ("I told you to use X, remember that")
+- You have **hundreds of project-specific facts** that vary too much for manual curation
+- You want **semantic search** over accumulated knowledge rather than rule-based matching
+
+Consider instruction files when:
+- The rule is **universal and behavioral** ("test before committing", "match existing style")
+- It should apply to **every prompt** regardless of workspace
+- Attention cost doesn't matter because the rule is critical
+
+Consider nothing when:
+- The information is **already in the repo** (README, AGENTS.md, config files) and the agent
+  will find it by reading the codebase
+
+### The attention argument
+
+All of these approaches ultimately inject text into the model's context window. The difference
+is *when* and *how much*:
+
+- Instruction files: every turn, full content, always
+- Herald: once per workspace, matching subset only
+- Auto-memory: every turn (or tool call), retrieved subset, variable quality
+- Multi-agent frameworks: per-agent charter on every spawn, full content
+
+Research on LLM instruction-following shows degradation as prompt length increases
+([Single-Agent vs Multi-Agent](https://liang-y-yu.github.io/publication/2025-10-01-paper-title-number-10)).
+Herald minimizes this by injecting once and only the relevant subset.
+
 ## How it's built
 
 Herald is a Copilot CLI extension using the `@github/copilot-sdk/extension` API. It registers
