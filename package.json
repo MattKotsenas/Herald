@@ -1,0 +1,20 @@
+{
+  "name": "herald",
+  "version": "0.1.0",
+  "description": "Contextual preferences extension for Copilot CLI - injects user preferences based on workspace context",
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "dependencies": {
+    "yaml": "^2.7.1"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MattKotsenas/Herald.git"
+  }
+}
