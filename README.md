@@ -218,10 +218,10 @@ pattern: inject preferences on the first message per cwd, then stay silent.
 ### Why an extension, not a plugin?
 
 Copilot CLI [plugins](https://docs.github.com/en/copilot/reference/hooks-configuration) support
-`hooks.json` with command-based hooks, but their `userPromptSubmitted` output is explicitly
-ignored by the CLI runtime ("prompt modification not currently supported in customer hooks").
-Extensions using the SDK's `onUserPromptSubmitted` callback CAN return `modifiedPrompt`, which
-is the mechanism Herald uses.
+`hooks.json` with command-based hooks, but their `userPromptSubmitted` output is
+[explicitly ignored](https://docs.github.com/en/copilot/reference/hooks-configuration#user-prompt-submitted-hook)
+by the CLI runtime. Extensions using the SDK's `onUserPromptSubmitted` callback CAN return
+`modifiedPrompt`, which is the mechanism Herald uses.
 
 ## Development
 
