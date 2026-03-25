@@ -1,0 +1,32 @@
+# Sample Herald preferences file
+# Copy to ~/.copilot/preferences.yaml and customize for your workflow.
+
+preferences:
+  # Git branch naming - Azure DevOps repos
+  - when:
+      remote: dev.azure.com
+    content: |
+      Use branch prefix `users/aturing/` for new branches.
+
+  # Git branch naming - GitHub repos
+  - when:
+      remote: github.com
+    content: |
+      Use branch prefixes: `bugfix/`, `feature/`, or `refactor/`.
+
+  # .NET project conventions
+  - when:
+      fileExists: "**/*.csproj"
+    content: |
+      This is a .NET project.
+      Use `dotnet add package` rather than editing XML directly.
+
+  # Node.js project conventions
+  - when:
+      fileExists: package.json
+    content: |
+      When adding dependencies, use `npm install` not manual edits to package.json.
+
+  # Always-on preferences
+  - content: |
+      When writing commit messages, use conventional commits format.
