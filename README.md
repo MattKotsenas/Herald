@@ -183,6 +183,23 @@ ORDER BY rank LIMIT 20;
 The goal isn't to automate preference extraction (that's error-prone), but to help you notice
 patterns you'd otherwise keep re-explaining.
 
+### What session mining typically reveals
+
+Based on analysis of real developer session histories, the most common discoverable preferences are:
+
+| Category | Example finding | Belongs in |
+|----------|----------------|-----------|
+| Branch naming | `users/me/` on ADO, `bugfix/` on GitHub | **preferences.yaml** (varies by platform) |
+| Package management | "use `dotnet add package` not XML" | **preferences.yaml** (varies by project type) |
+| XML doc conventions | "use `<see langword="null"/>` not `<c>null</c>`" | **preferences.yaml** (.NET-specific) |
+| Commit references | "use function names, not line numbers" | Could go either way - if universal, **instructions** |
+| No em-dashes | "use a hyphen instead" | **instructions** (universal writing style) |
+| Test-first workflow | "write failing test, then fix" | **instructions** (behavioral) |
+| Backward compatibility | "ask if it's shipped before changing APIs" | **instructions** (behavioral) |
+
+The pattern: **facts about this workspace** go in preferences, **rules about how to think** stay
+in instructions.
+
 ## How it's built
 
 Herald is a Copilot CLI extension using the `@github/copilot-sdk/extension` API. It registers

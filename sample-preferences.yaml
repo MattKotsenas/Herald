@@ -1,5 +1,8 @@
 # Sample Herald preferences file
 # Copy to ~/.copilot/preferences.yaml and customize for your workflow.
+#
+# These samples are based on patterns commonly found in developer session
+# histories. Run `/chronicle` or query the session store to discover your own.
 
 preferences:
   # Git branch naming - Azure DevOps repos
@@ -20,6 +23,7 @@ preferences:
     content: |
       This is a .NET project.
       Use `dotnet add package` rather than editing XML directly.
+      For XML docs, use `<see langword="null"/>` not `<c>null</c>`.
 
   # Node.js project conventions
   - when:
@@ -30,3 +34,4 @@ preferences:
   # Always-on preferences
   - content: |
       When writing commit messages, use conventional commits format.
+      Use the function name in commit messages, not line numbers.
