@@ -258,15 +258,6 @@ Herald is a Copilot CLI extension using the `@github/copilot-sdk/extension` API.
 an `onUserPromptSubmitted` hook that fires on each user message. The hook implements a latch
 pattern: inject preferences on the first message per cwd, then stay silent.
 
-```
-~/.copilot/extensions/herald/
-├── extension.mjs      # Entry point: joinSession + hook registration
-├── preferences.mjs    # YAML loading and validation
-├── context.mjs        # Matcher evaluation (remote, fileExists, cwdContains)
-├── herald.mjs         # Latch logic and injection text builder
-└── node_modules/      # yaml parser
-```
-
 ### Why an extension, not a plugin?
 
 Copilot CLI [plugins](https://docs.github.com/en/copilot/reference/hooks-configuration) support
