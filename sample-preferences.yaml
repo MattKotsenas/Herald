@@ -16,8 +16,11 @@ preferences:
   - when:
       fileExists: "**/*.csproj"
     content: |
-      This is a .NET project.
-      Use `dotnet add package` rather than editing XML directly.
+      If the project uses snapshot tests (*.verified.*), use `dotnet verify accept` to
+      accept snapshots rather than editing them manually. The `verify.tool` package should be in
+      the project's dotnet-tools.json; if not, add it with `dotnet tool install verify.tool`.
+      Document the snapshot workflow in CONTRIBUTING.md or a similar file so other contributors
+      know the process.
       For XML doc references to language keywords (e.g. null, true, false),
       use `<see langword="null"/>` instead of `<c>null</c>`.
 
